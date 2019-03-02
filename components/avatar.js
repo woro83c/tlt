@@ -1,5 +1,16 @@
-import classNames from 'classnames';
+export default (props) => {
+  const { user: { username }, setName } = props;
 
+  return (
+    <div onMouseOver={() => setName(username)} onMouseOut={() => setName(null)}>
+      {username}
+    </div>
+  );
+};
+
+// import classNames from 'classnames';
+
+/*
 export default props => {
     const { id, avatar, username } = props.user;
 
@@ -47,3 +58,4 @@ export default props => {
         </div>
     );
 };
+*/

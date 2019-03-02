@@ -1,16 +1,35 @@
 import fetch from "isomorphic-unfetch";
+import { useState } from "react";
+import Avatar from "../components/avatar";
 import Header from "../components/header";
+import Footer from "../components/footer";
+import "../style.css";
 
-const Index = props => (
-  <>
-    <Header />
-    <main>
-      {props.users.map(user => user.user).filter(user => user.id).map(user => (
-        <div key={user.id}>{user.username}</div>
-      ))}
-    </main>
-  </>
-);
+function Index(props) {
+  const [name, setName] = useState(null);
+
+  return (
+    <>
+      <Header />
+      <main>
+        {props.users.map(user => user.user).filter(user => user.id).map(user => (
+          <Avatar key={user.id} user={user} setName={setName} />
+        ))}
+      </main>
+      <Footer>{name}</Footer>
+
+      <style jsx>{`
+        main {
+          transition: 0.2s;
+        }
+
+        main:hover {
+          transform: scale(1.1);
+        }
+      `}</style>
+    </>
+  );
+}
 
 Index.getInitialProps = async () => {
   const token = "NTQ4NjgzOTYxMjY2ODY0MTQ4.D1Jhjg.MDFC0tiyLhGcDZmk8210KcEdWBI";
