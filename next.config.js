@@ -1,1 +1,1 @@
-module.exports = {}
+module.exports = require("@zeit/next-css");
