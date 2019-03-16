@@ -1,61 +1,42 @@
-export default (props) => {
-  const { user: { username }, setName } = props;
-
-  return (
-    <div onMouseOver={() => setName(username)} onMouseOut={() => setName(null)}>
-      {username}
-    </div>
-  );
-};
-
-// import classNames from 'classnames';
-
-/*
-export default props => {
-    const { id, avatar, username } = props.user;
-
+function Avatar({ member: { id, name, avatar } }) {
+    const src = avatar ? `https://cdn.discordapp.com/avatars/${id}/${avatar}.png` : null;
     return (
-        <div
-            className={classNames('avatar', { 'bg-primary': !avatar, 'bg-secondary': !id })}
-            onMouseEnter={() => props.handleEnter(username)}
-            onMouseLeave={props.handleLeave}
-        >
-            {id && (
-                avatar ? (
-                    <img className="img-fluid" src={`https://cdn.discordapp.com/avatars/${id}/${avatar}.png`} alt={username} />
-                ) : (
-                    <span className="initial">{username.slice(0, 1).toUpperCase()}</span>
-                )
+        <>
+            {avatar ? (
+                <img className="avatar img-fluid" src={src} alt={name} />
+            ) : (
+                <span className="avatar">{name.substring(0, 1).toUpperCase()}</span>
             )}
 
             <style jsx>{`
                 .avatar {
                     align-items: center;
+                    background: #e6772b;
+                    cursor: pointer;
                     display: flex;
-                    grid-area: ${props.name};
+                    flex: 1 1 auto;
+                    font-weight: 700;
                     justify-content: center;
-                    overflow: hidden;
-
-                    ${id ? 'cursor: pointer;' : ''}
+                    transition: 400ms;
                 }
 
-                .avatar * {
-                    transition: 0.4s;
+                @media (min-width: 576px) {
+                    .avatar {
+                        font-size: 1.125rem;
+                    }
                 }
 
-                .avatar *:hover,
-                .avatar *:focus {
+                .avatar:hover,
+                .avatar:focus {
                     transform: scale(1.5);
                 }
 
-                .initial {
-                    align-items: center;
-                    display: flex;
-                    justify-content: center;
-                    width: 100%; height: 100%;
+                .avatar.img-fluid {
+                    align-self: center;
                 }
             `}</style>
-        </div>
+        </>
     );
-};
-*/
+}
+
+export default Avatar;

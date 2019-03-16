@@ -1,54 +1,111 @@
-import fetch from "isomorphic-unfetch";
-import { useState } from "react";
-import Avatar from "../components/avatar";
-import Header from "../components/header";
-import Footer from "../components/footer";
-import "../style.css";
+import fetch from 'isomorphic-unfetch';
+import { shuffle } from 'lodash';
+import Head from 'next/head';
+import { useState } from 'react';
+import Tilt from 'react-tilt';
+import css from 'styled-jsx/css';
+import Avatar from '../components/avatar';
+import Header from '../components/header';
+import Footer from '../components/footer';
+import padArray from '../util/padArray';
+import { blacklist, token } from '../config';
+import '../style.css';
 
-function Index(props) {
-  const [name, setName] = useState(null);
+const { className, styles } = css.resolve`
+    header,
+    footer {
+        padding: 3rem 15px;
+        text-align: center;
+    }
+`;
 
-  return (
-    <>
-      <Header />
-      <main>
-        {props.users.map(user => user.user).filter(user => user.id).map(user => (
-          <Avatar key={user.id} user={user} setName={setName} />
-        ))}
-      </main>
-      <Footer>{name}</Footer>
+function Index({ members }) {
+    const [footerContent, setFooterContent] = useState(null);
 
-      <style jsx>{`
-        main {
-          transition: 0.2s;
-        }
+    return (
+        <>
+            <Head>
+                <title>tLT - 15 years 💪</title>
+                <meta http-equiv="x-ua-compatible" content="ie=edge" />
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+            </Head>
+            <Header className={className} />
+            <main>
+                <Tilt>
+                    <div className="grid">
+                        {members.map((member, index) => {
+                            const { id, name } = member;
+                            const gridArea = 'A' + (index + 1).toString().padStart(2, '0');
+                            const callbacks = {
+                                onMouseOver: () => setFooterContent(name),
+                                onMouseOut: () => setFooterContent(null),
+                            };
 
-        main:hover {
-          transform: scale(1.1);
-        }
-      `}</style>
-    </>
-  );
+                            return (
+                                <div key={index} className="grid-item" style={{ gridArea }} {...id && callbacks}>
+                                    {id && <Avatar member={member} />}
+                                </div>
+                            );
+                        })}
+                    </div>
+                </Tilt>
+            </main>
+            <Footer className={className}>
+                {footerContent}
+            </Footer>
+
+            {styles}
+            <style jsx>{`
+                main {
+                    display: flex;
+                    justify-content: center;
+                }
+
+                .grid {
+                    display: grid;
+                    grid-template-areas:
+                        'A01 A02  .  A03  .  A04 A05 A06'
+                        ' .  A07  .  A08  .   .  A09  . '
+                        ' .  A10  .  A11  .   .  A12  . '
+                        ' .  A13  .  A14  .   .  A15  . '
+                        ' .  A16  .  A17  .   .  A18  . '
+                        ' .  A19  .  A20  .   .  A21  . '
+                        ' .  A22  .  A23 A24  .  A25  . ';
+                    grid-template-columns: repeat(8, 1fr);
+                    grid-template-rows: repeat(7, 0.75fr);
+                    max-width: 512px;
+                }
+
+                .grid-item {
+                    background: #393d42;
+                    display: flex;
+                    overflow: hidden;
+                }
+            `}</style>
+        </>
+    );
 }
 
 Index.getInitialProps = async () => {
-  const token = "NTQ4NjgzOTYxMjY2ODY0MTQ4.D1Jhjg.MDFC0tiyLhGcDZmk8210KcEdWBI";
-  const res = await fetch("https://discordapp.com/api/v6/guilds/326409849237798912/members?limit=100", {
-    headers: {
-      "Authorization": `Bot ${token}`,
-    },
-  });
-  const data = await res.json();
+    const limit = 25;
+    const res = await fetch(`https://discordapp.com/api/v6/guilds/326409849237798912/members?limit=${limit}`, {
+        headers: {
+            'Authorization': `Bot ${token}`,
+        },
+    });
+    const data = await res.json();
+    const members = data
+        .map(({ user: { id, username, avatar, bot }, nick }) => ({
+            id,
+            name: nick || username,
+            avatar,
+            bot,
+        }))
+        .filter(({ name, bot }) => blacklist.indexOf(name) === -1 && !bot);
 
-  // const pixelCount = 25;
-  // const pixels = shuffle(arrayPad(data.filter(({ user }) => {
-  //   const blacklist = ['code_', 'GanjatheCat'];
-  //   return !blacklist.find((name) => name === user.username) && !user.bot;
-  // }), pixelCount, { user: new Box() }));
-
-  return {
-    users: data,
-  };
+    return {
+        members: shuffle(padArray(members, limit, {})),
+    };
 };
 
 export default Index;

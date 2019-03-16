@@ -1,67 +1,55 @@
-/* @import url("https://fonts.googleapis.com/css?family=Roboto"); */
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700');
+
+/* Document */
+
+* {
+    box-sizing: border-box;
+}
 
 html {
-  font-size: 16px;
+    font-size: 16px;
+    -webkit-tap-highlight-color: transparent;
 }
+
+@media (min-width: 576px) {
+    html {
+        font-size: 18px;
+    }
+}
+
+/* Body */
 
 body {
-  background: black;
-  color: white;
-  font-family: "Roboto", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  margin: 0;
+    background: black;
+    color: white;
+    font-family: 'Roboto Condensed', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
+    margin: 0;
 }
+
+/* Container */
 
 #__next {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
 }
 
-[data-tilt] {
-  box-shadow: none !important;
-}
-
-main {
-  display: grid;
-  grid-template-areas:
-    "A01 A02  .  A03  .  A04 A05 A06"
-    " .  A07  .  A08  .   .  A09  . "
-    " .  A10  .  A11  .   .  A12  . "
-    " .  A13  .  A14  .   .  A15  . "
-    " .  A16  .  A17  .   .  A18  . "
-    " .  A19  .  A20  .   .  A21  . "
-    " .  A22  .  A23 A24  .  A25  . ";
-  grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: repeat(7, 0.75fr);
-  max-width: 512px;
-}
+/* Utilities */
 
 .fade-enter {
-  opacity: 0.01;
+    opacity: 0.01;
 }
 
-.fade-enter.fade-enter-active {
-  opacity: 1;
-  transition: opacity 600ms ease-in;
-}
-
-/**
- * Utility classes
- */
-
-.bg-primary {
-  background: #e6772b;
-}
-
-.bg-secondary {
-  background: #393d42;
+.fade-enter-active {
+    opacity: 1;
+    transition: 400ms ease-in;
 }
 
 .img-fluid {
-  height: auto;
-  max-width: 100%;
+    height: auto;
+    max-width: 100%;
 }
