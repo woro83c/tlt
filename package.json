@@ -1,6 +1,7 @@
 {
     "scripts": {
-        "dev": "next"
+        "dev": "next",
+        "now-build": "next build && next export -o dist"
     },
     "dependencies": {
         "@zeit/next-css": "^1.0.1",
