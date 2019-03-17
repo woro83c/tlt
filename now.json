@@ -1,8 +1,8 @@
 {
-  "name": "tlt",
-  "version": 2,
-  "alias": "tlt.now.sh",
-  "builds": [
-    { "src": "package.json", "use": "@now/static-build" }
-  ]
+    "name": "tlt",
+    "version": 2,
+    "alias": "tlt.now.sh",
+    "builds": [
+        { "src": "package.json", "use": "@now/static-build" }
+    ]
 }
