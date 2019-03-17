@@ -29,6 +29,12 @@ body {
     margin: 0;
 }
 
+/* SVG */
+
+svg {
+    vertical-align: middle;
+}
+
 /* Container */
 
 #__next {
@@ -52,4 +58,8 @@ body {
 .img-fluid {
     height: auto;
     max-width: 100%;
+}
+
+.text-hide {
+    font: 0/0 a;
 }

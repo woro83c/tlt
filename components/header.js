@@ -1,7 +1,11 @@
+import Logo from './logo';
+
 function Header(props) {
     return (
         <header {...props}>
-            <h1 style={{ fontWeight: 300, lineHeight: 1.2, margin: 0 }}><strong>#TLT</strong>XV</h1>
+            <h1 className="text-hide">
+                #TLTVX <Logo width="112" height="auto" />
+            </h1>
         </header>
     );
 }
