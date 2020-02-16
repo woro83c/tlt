@@ -17,7 +17,7 @@ function Footer({ children, ...rest }) {
 
             <style jsx>{`
                 .badge {
-                    background: #393d42;
+                    background: #4c212a;
                     border-radius: 0.25rem;
                     display: inline-block;
                     font-size: 75%;

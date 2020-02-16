@@ -25,7 +25,7 @@ function Index({ members }) {
     return (
         <>
             <Head>
-                <title>tLT - 15 years 💪</title>
+                <title>tLT - 16 years 💪</title>
                 <meta http-equiv="x-ua-compatible" content="ie=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
             </Head>
@@ -77,7 +77,7 @@ function Index({ members }) {
                 }
 
                 .grid-item {
-                    background: #393d42;
+                    background: #4c212a;
                     display: flex;
                     overflow: hidden;
                 }

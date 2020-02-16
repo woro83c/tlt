@@ -11,7 +11,7 @@ function Avatar({ member: { id, name, avatar } }) {
             <style jsx>{`
                 .avatar {
                     align-items: center;
-                    background: #e6772b;
+                    background: #eb5160;
                     cursor: pointer;
                     display: flex;
                     flex: 1 1 auto;
