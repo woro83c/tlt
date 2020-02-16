@@ -6,7 +6,7 @@
     "dependencies": {
         "@zeit/next-css": "^1.0.1",
         "isomorphic-unfetch": "^3.0.0",
-        "lodash": "^4.17.11",
+        "lodash": "^4.17.13",
         "next": "latest",
         "react": "latest",
         "react-dom": "latest",
