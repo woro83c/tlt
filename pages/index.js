@@ -87,12 +87,9 @@ function Index({ members }) {
 }
 
 Index.getInitialProps = async () => {
-    const limit = 30; // 30 should do for now, to account for the blacklist/ bots and the 25 members
-    const res = await fetch(`https://discordapp.com/api/v6/guilds/326409849237798912/members?limit=${limit}`, {
-        headers: {
-            'Authorization': `Bot ${token}`,
-        },
-    });
+    // 30 should do for now, to account for the blacklist/ bots and the 25 members
+    const url = 'https://discordapp.com/api/v6/guilds/326409849237798912/members?limit=30';
+    const res = await fetch(url, { headers: { 'Authorization': `Bot ${token}` } });
     const data = await res.json();
     const members = data
         .map(({ user: { id, username, avatar, bot }, nick }) => ({
@@ -103,9 +100,7 @@ Index.getInitialProps = async () => {
         }))
         .filter(({ name, bot }) => blacklist.indexOf(name) === -1 && !bot);
 
-    return {
-        members: shuffle(padArray(members, limit, {})),
-    };
+    return { members: shuffle(padArray(members, 25, {})) };
 };
 
 export default Index;
