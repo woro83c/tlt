@@ -87,7 +87,7 @@ function Index({ members }) {
 }
 
 Index.getInitialProps = async () => {
-    const limit = 25;
+    const limit = 30; // 30 should do for now, to account for the blacklist/ bots and the 25 members
     const res = await fetch(`https://discordapp.com/api/v6/guilds/326409849237798912/members?limit=${limit}`, {
         headers: {
             'Authorization': `Bot ${token}`,
