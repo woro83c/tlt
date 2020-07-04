@@ -98,7 +98,9 @@ Index.getInitialProps = async () => {
             avatar,
             bot,
         }))
-        .filter(({ name, bot }) => blacklist.indexOf(name) === -1 && !bot);
+        .filter(({ name, bot }) => blacklist.indexOf(name) === -1 && !bot)
+        .sort((a, b) => !!b.avatar - !!a.avatar)
+        .slice(0, 25);
 
     return { members: shuffle(padArray(members, 25, {})) };
 };
