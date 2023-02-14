@@ -98,7 +98,7 @@ Index.getInitialProps = async () => {
     }
 
     const url = 'https://discordapp.com/api/v6/guilds/326409849237798912/members?limit=99';
-    const res = await fetch(url, { headers: { 'Authorization': `Bot ${token}` } });
+    const res = await fetch(url, { headers: { 'Authorization': `Bot ${process.env.BOT_TOKEN}` } });
     const data = await res.json();
     const members = data
         .map((member) => {
