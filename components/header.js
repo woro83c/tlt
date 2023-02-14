@@ -4,7 +4,7 @@ function Header(props) {
     return (
         <header {...props}>
             <h1 className="text-hide">
-                #TLTVX <Logo width="112" height="auto" />
+                #TLT19 <Logo width="112" />
             </h1>
         </header>
     );

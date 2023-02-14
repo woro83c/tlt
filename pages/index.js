@@ -8,7 +8,7 @@ import Avatar from '../components/avatar';
 import Header from '../components/header';
 import Footer from '../components/footer';
 import padArray from '../util/padArray';
-import { blacklist, token } from '../config';
+import { blacklist, tltRole, token } from '../config';
 import '../style.css';
 
 const { className, styles } = css.resolve`
@@ -25,7 +25,7 @@ function Index({ members }) {
     return (
         <>
             <Head>
-                <title>tLT - 16 years 💪</title>
+                <title>tLT - 19 years 💪</title>
                 <meta httpEquiv="x-ua-compatible" content="ie=edge" />
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
             </Head>
@@ -77,7 +77,7 @@ function Index({ members }) {
                 }
 
                 .grid-item {
-                    background: #4c212a;
+                    background: #393d42;
                     display: flex;
                     overflow: hidden;
                 }
@@ -87,19 +87,25 @@ function Index({ members }) {
 }
 
 Index.getInitialProps = async () => {
-    // 30 should do for now, to account for the blacklist/ bots and the 25 members
-    const url = 'https://discordapp.com/api/v6/guilds/326409849237798912/members?limit=30';
+    function getName({ user: { username }, nick }) {
+        let name = nick || username;
+        if (name === 'Allie') return 'bace';
+        if (name === 'denetii') return 'Ksk';
+        if (name === 'Johnny') return 'Doodoo';
+        if (name === 'mikestoleyobike') return 'Silent';
+        if (name === 'Xenelith') return 'Dragon';
+        return name;
+    }
+
+    const url = 'https://discordapp.com/api/v6/guilds/326409849237798912/members?limit=99';
     const res = await fetch(url, { headers: { 'Authorization': `Bot ${token}` } });
     const data = await res.json();
     const members = data
-        .map(({ user: { id, username, avatar, bot }, nick }) => ({
-            id,
-            name: nick || username,
-            avatar,
-            bot,
-        }))
-        .filter(({ name, bot }) => blacklist.indexOf(name) === -1 && !bot)
-        .sort((a, b) => !!b.avatar - !!a.avatar)
+        .map((member) => {
+            const { user: { id, avatar, bot }, roles } = member;
+            return { id, name: getName(member), avatar, bot, roles };
+        })
+        .filter(({ name, bot, roles }) => blacklist.indexOf(name) === -1 && !bot && roles.includes(tltRole))
         .slice(0, 25);
 
     return { members: shuffle(padArray(members, 25, {})) };
